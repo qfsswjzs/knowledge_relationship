@@ -1,0 +1,6 @@
+R.home()
+setwd("/Users/wujie/Documents/Projects/Pycharm/graduation_project/simulation")
+Rscript paperexperiment.R
+R paperexperiment.R
+paperexperiment.R
+paper_experiment.R
