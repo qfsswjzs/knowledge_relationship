@@ -23,13 +23,10 @@ test_data = data$test_data
 
 early_semester = 1:59
 last_semester = 60:83
-
 early_train_data = train_data[, early_semester]
 early_test_data = test_data[, early_semester]
 last_train_data = train_data[, last_semester]
 last_test_data = test_data[, last_semester]
-
-
 
 get_theta = function (fun, train_data){
   if(fun == "clime") theta = clime_knowledge(train_data)
@@ -43,6 +40,7 @@ get_theta = function (fun, train_data){
 best_mse_forecast = function (fun_type){
   mu_1 = apply(early_train_data, 2, mean)
   mu_2 = apply(last_train_data, 2, mean)
+
   Sigma = solve(get_theta(fun_type, train_data))
 
   Sigma_11 = Sigma[early_semester, early_semester]
@@ -79,6 +77,7 @@ svr_forcast = function (){
                     gamma = gamma,
                     cost = cost
                     )
+
     predict_values[, i] = predict(svr.model, early_test_data)
   }
 
@@ -116,6 +115,8 @@ rf_forcast = function (){
   RMSE = sqrt(sum((predict_values - last_test_data) ^ 2) / (nrow(last_test_data) * ncol(last_test_data)))
   MAE = sum(abs(predict_values - last_test_data)) / (nrow(last_test_data) * ncol(last_test_data))
   error = list(RMSE = round(RMSE,3), MAE = round(MAE,3))
+
+  return (error)
 }
 
 
