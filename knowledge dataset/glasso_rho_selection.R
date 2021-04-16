@@ -13,7 +13,7 @@ rho_selection = function (data, k){
   rholist = seq(from = 0.01, to = 1, length.out = nrho)
 
   loss = vector(mode = 'numeric', nrho)
-  folds = createFolds(data[,61], k)
+  folds = createFolds(data[,50], k)
 
   for(i in 1:k){
     testMat = data[folds[[i]],]

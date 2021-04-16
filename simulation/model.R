@@ -12,7 +12,7 @@ vn = 100
 get_data = function (model_name, p){
   mean = vector(mode = 'numeric', p)
   theta = matrix(0, nrow = p, ncol = p)
-  theta = get_model(model_name = model_name, theta = theta)
+  theta = get_model(model_name = model_name, theta = theta, p)
   sigma = ginv(theta)
 
   train_data = mvrnorm(n, mean, sigma)
@@ -22,7 +22,7 @@ get_data = function (model_name, p){
 }
 
 
-model0 = function (theta){
+model0 = function (theta, p){
   for(i in 1: p){
     for(j in 1: p){
       if(i == j)  theta[i, j] = 1
@@ -36,7 +36,7 @@ model0 = function (theta){
 }
 
 # AR(1) model
-model1 = function (theta){
+model1 = function (theta, p){
   for(i in 1: p){
     for(j in 1: p){
       theta[i, j] = 0.6 ^ abs(i - j)
@@ -46,7 +46,7 @@ model1 = function (theta){
 }
 
 
-model2 = function (theta){
+model2 = function (theta, p){
   p = ncol(theta)
   for(i in 1:p){
     for(j in 1:p){
@@ -76,7 +76,7 @@ model2 = function (theta){
 }
 
 
-model3 = function (theta){
+model3 = function (theta, p){
   for(i in 1: p){
     for(j in 1: p){
       if(i == j)  theta[i, j] = 1
@@ -90,7 +90,7 @@ model3 = function (theta){
 
 
 # Band Grpah
-model4 = function(theta){
+model4 = function(theta, p){
   for(i in 1: p){
     for(j in 1: p){
       if(i == j)  theta[i, j] = 1
@@ -104,20 +104,26 @@ model4 = function(theta){
       }
     }
   }
+
+  D = matrix(0, p, p)
+  diag(D) = apply(runif(p, min = 1, max = 5),2, sqrt)
+  theta = D %*% theta %*% D
+
   return (theta)
 }
 
 
 # E-R graph
-model5 = function (theta){
+model5 = function (theta, p){
 
 }
 
 
-get_model = function (model_name, theta){
-  if(model_name == "model0") return (model0(theta))
-  if(model_name == "model1") return (model1(theta))
-  if(model_name == "model2") return (model2(theta))
-  if(model_name == "model3") return (model3(theta))
+get_model = function (model_name, theta, p){
+  if(model_name == "model0") return (model0(theta, p))
+  if(model_name == "model1") return (model1(theta, p))
+  if(model_name == "model2") return (model2(theta, p))
+  if(model_name == "model3") return (model3(theta, p))
+  if(model_name == "model4") return (model4(theta, p))
 }
 
