@@ -12,7 +12,7 @@ lambda_selection = function (data, k){
   lambdalist = seq(from = 0.01, to = 1, length.out = nlambda)
 
   loss = vector(mode = 'numeric', nlambda)
-  folds = createFolds(data[,61], k)
+  folds = createFolds(data[,50], k)
 
   for(i in 1:k){
     testMat = data[folds[[i]],]
@@ -21,7 +21,7 @@ lambda_selection = function (data, k){
     wilist = clime_result$icov
 
     for(j in 1:nlambda){
-       wi = matrix(unlist(wilist[j]), nrow = p)
+       wi = matrix(unlist(wilist[j]), nrow = ncol(data))
        loss[j] = loss[j] + lossfun(var(testMat), wi)
     }
   }

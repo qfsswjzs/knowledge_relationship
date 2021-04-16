@@ -11,6 +11,7 @@ library(utils)
 setwd("/Users/wujie/Documents/Projects/Pycharm/graduation_project/simulation")
 source('model.R')
 source('rho_selection.R')
+source("ACLIME.R")
 
 
 method_experiment = function (name, train_data, validation_data){
@@ -74,7 +75,7 @@ for(function_name in function_list){
         }
 
         close(tpb)
-d
+
         operator_mean = mean(error_operator_list)
         l1_mean = mean(error_l1_list)
         f_mean = mean(error_f_list)
@@ -91,10 +92,10 @@ d
 }
 
 
-
-
-
-
+data = get_data(model_name = model_name, p)
+theta = data$theta
+train_data = data$train_data
+validation_data = data$validation_data
 
 
 
